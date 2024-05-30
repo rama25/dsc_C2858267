@@ -1,0 +1,80 @@
+Data loaded:
+  accountNumber customerId  creditLimit  ...  recurringAuthInd expirationDateKeyInMatch  isFraud
+0     737265056  737265056       5000.0  ...                                      False    False
+1     737265056  737265056       5000.0  ...                                      False    False
+2     737265056  737265056       5000.0  ...                                      False    False
+3     737265056  737265056       5000.0  ...                                      False    False
+4     830329091  830329091       5000.0  ...                                      False    False
+
+[5 rows x 29 columns]
+Number of samples: 786363
+Columns with empty strings: ['acqCountry', 'merchantCountryCode', 'posEntryMode', 'posConditionCode', 'transactionType', 'echoBuffer', 'merchantCity', 'merchantState', 'merchantZip', 'posOnPremises', 'recurringAuthInd']
+Columns with NaNs: []
+Data after dropping columns and rows with NaNs:
+  accountNumber customerId  creditLimit  availableMoney  ... currentBalance  cardPresent expirationDateKeyInMatch isFraud
+0     737265056  737265056       5000.0          5000.0  ...            0.0        False                    False   False
+1     737265056  737265056       5000.0          5000.0  ...            0.0         True                    False   False
+2     737265056  737265056       5000.0          5000.0  ...            0.0        False                    False   False
+3     737265056  737265056       5000.0          5000.0  ...            0.0        False                    False   False
+4     830329091  830329091       5000.0          5000.0  ...            0.0         True                    False   False
+
+[5 rows x 23 columns]
+Number of samples: 776668
+Data after label encoding:
+   accountNumber  customerId  creditLimit  ...  cardPresent expirationDateKeyInMatch  isFraud
+0           3553        3553       5000.0  ...        False                    False    False
+1           3553        3553       5000.0  ...         True                    False    False
+2           3553        3553       5000.0  ...        False                    False    False
+3           3553        3553       5000.0  ...        False                    False    False
+4           4081        4081       5000.0  ...         True                    False    False
+
+[5 rows x 23 columns]
+Data after datetime conversion:
+  transactionDateTime accountOpenDate dateOfLastAddressChange
+0 2016-08-13 14:27:32      2015-03-14              2015-03-14
+1 2016-10-11 05:05:54      2015-03-14              2015-03-14
+2 2016-11-08 09:18:39      2015-03-14              2015-03-14
+3 2016-12-10 02:14:50      2015-03-14              2015-03-14
+4 2016-03-24 21:04:46      2015-08-06              2015-08-06
+Data after feature engineering:
+   accountNumber  customerId  creditLimit  ...  addressChangeYear  addressChangeMonth  addressChangeDay
+0           3553        3553       5000.0  ...               2015                   3                14
+1           3553        3553       5000.0  ...               2015                   3                14
+2           3553        3553       5000.0  ...               2015                   3                14
+3           3553        3553       5000.0  ...               2015                   3                14
+4           4081        4081       5000.0  ...               2015                   8                 6
+
+[5 rows x 29 columns]
+Target variable distribution:
+False    764702
+True      11966
+Name: isFraud, dtype: int64
+Model score (accuracy): 0.9897443777155168
+AUC-ROC: 0.9990271117609143
+Classification report:
+              precision    recall  f1-score   support
+
+       False       0.99      0.99      0.99    152654
+        True       0.99      0.99      0.99    153227
+
+    accuracy                           0.99    305881
+   macro avg       0.99      0.99      0.99    305881
+weighted avg       0.99      0.99      0.99    305881
+
+Confusion matrix:
+[[150714   1940]
+ [  1197 152030]]
+Feature importances:
+transactionAmount       0.135207
+merchantName            0.088262
+merchantCategoryCode    0.055773
+currentBalance          0.051194
+availableMoney          0.047756
+transactionMonth        0.043402
+currentExpDate          0.042793
+posConditionCode        0.042581
+accountOpenDay          0.041938
+cardLast4Digits         0.041833
+dtype: float64
+Model saved to fraud_detection_model.pkl
+Total execution time: 157.89 seconds
